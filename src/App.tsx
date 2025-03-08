@@ -2,9 +2,11 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import './styles/global.css';
-import Login from '@/module/Authentication/Login/Login.tsx';
+import Register from '@/module/Authentication/Register/Register.tsx';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 const Stack = createNativeStackNavigator();
+const queryClient = new QueryClient();
 
 function RootStack() {
     return (
@@ -14,7 +16,7 @@ function RootStack() {
             <Stack.Screen
                 name="Home"
                 options={{title: 'Overview'}}
-                component={Login}
+                component={Register}
             />
         </Stack.Navigator>
     );
@@ -22,8 +24,10 @@ function RootStack() {
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <RootStack />
-        </NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+            <NavigationContainer>
+                <RootStack />
+            </NavigationContainer>
+        </QueryClientProvider>
     );
 }
